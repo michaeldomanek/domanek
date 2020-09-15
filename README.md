@@ -1,2 +1,2 @@
-# domanek
-NVS 2020
+# Domanek - NVS
+NVS5 repository - 2020/21
