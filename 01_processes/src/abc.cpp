@@ -1,5 +1,6 @@
 #include <iostream>
 #include <unistd.h>
+#include <chrono>
 
 using namespace std;
 
@@ -8,13 +9,13 @@ int main() {
 
     if (pid == 0) {
         while (true){
-            cout << "A" << flush;
-            sleep(1);
+            cout << "AD" << flush;
+            std::chrono::milliseconds sleeptime(1000); //sleep(1) doesn't work
         }
     } else {
         while (true){
             cout << "B" << flush;
-            sleep(1);
+            std::chrono::milliseconds sleeptime(1000);
         }
     }
 }

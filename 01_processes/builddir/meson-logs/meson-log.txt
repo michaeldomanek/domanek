@@ -1,6 +1,6 @@
-Build started at 2020-09-22T10:12:12.214199
+Build started at 2020-09-22T10:37:48.549371
 Main binary: /usr/bin/python3
-Build Options: -Dbuildtype=debug -Dbackend=ninja
+Build Options: -Dbuildtype=debug
 Python system: Linux
 The Meson build system
 Version: 0.55.1
@@ -9,11 +9,43 @@ Build dir: /mnt/c/Users/Michael/Google Drive/Schule/NVS/exercise/domanek/01_proc
 Build type: native build
 None of 'PKG_CONFIG_PATH' are defined in the environment, not changing global flags.
 None of 'PKG_CONFIG_PATH' are defined in the environment, not changing global flags.
-Project name: XXX
+Project name: 01_processes
 Project version: 0.1
+None of 'CXX' are defined in the environment, not changing global flags.
+None of 'CXXFLAGS' are defined in the environment, not changing global flags.
+None of 'LDFLAGS' are defined in the environment, not changing global flags.
+None of 'CPPFLAGS' are defined in the environment, not changing global flags.
+None of 'CXX_LD' are defined in the environment, not changing global flags.
+Sanity testing C++ compiler: c++
+Is cross compiler: False.
+None of 'CXX_LD' are defined in the environment, not changing global flags.
+Sanity check compiler command line: c++ /mnt/c/Users/Michael/Google Drive/Schule/NVS/exercise/domanek/01_processes/builddir/meson-private/sanitycheckcpp.cc -o /mnt/c/Users/Michael/Google Drive/Schule/NVS/exercise/domanek/01_processes/builddir/meson-private/sanitycheckcpp.exe -pipe -D_FILE_OFFSET_BITS=64
+Sanity check compile stdout:
+
+-----
+Sanity check compile stderr:
+
+-----
+Running test binary command: /mnt/c/Users/Michael/Google Drive/Schule/NVS/exercise/domanek/01_processes/builddir/meson-private/sanitycheckcpp.exe
 C++ compiler for the build machine: c++ (gcc 10.0.1 "c++ (Ubuntu 10-20200411-0ubuntu1) 10.0.1 20200411 (experimental) [master revision bb87d5cc77d:75961caccb7:f883c46b4877f637e0fa5025b4d6b5c9040ec566]")
 C++ linker for the build machine: c++ ld.bfd 2.34
 None of 'AR' are defined in the environment, not changing global flags.
+None of 'CXX' are defined in the environment, not changing global flags.
+None of 'CXXFLAGS' are defined in the environment, not changing global flags.
+None of 'LDFLAGS' are defined in the environment, not changing global flags.
+None of 'CPPFLAGS' are defined in the environment, not changing global flags.
+None of 'CXX_LD' are defined in the environment, not changing global flags.
+Sanity testing C++ compiler: c++
+Is cross compiler: False.
+None of 'CXX_LD' are defined in the environment, not changing global flags.
+Sanity check compiler command line: c++ /mnt/c/Users/Michael/Google Drive/Schule/NVS/exercise/domanek/01_processes/builddir/meson-private/sanitycheckcpp.cc -o /mnt/c/Users/Michael/Google Drive/Schule/NVS/exercise/domanek/01_processes/builddir/meson-private/sanitycheckcpp.exe -pipe -D_FILE_OFFSET_BITS=64
+Sanity check compile stdout:
+
+-----
+Sanity check compile stderr:
+
+-----
+Running test binary command: /mnt/c/Users/Michael/Google Drive/Schule/NVS/exercise/domanek/01_processes/builddir/meson-private/sanitycheckcpp.exe
 C++ compiler for the host machine: c++ (gcc 10.0.1 "c++ (Ubuntu 10-20200411-0ubuntu1) 10.0.1 20200411 (experimental) [master revision bb87d5cc77d:75961caccb7:f883c46b4877f637e0fa5025b4d6b5c9040ec566]")
 C++ linker for the host machine: c++ ld.bfd 2.34
 None of 'AR' are defined in the environment, not changing global flags.
@@ -27,8 +59,19 @@ Build targets in project: 1
 
 Found ninja-1.10.0 at /usr/bin/ninja
 Running compile:
-Working directory:  /mnt/c/Users/Michael/Google Drive/Schule/NVS/exercise/domanek/01_processes/builddir/meson-private/tmpnqso63ux
-Command line:  c++ /mnt/c/Users/Michael/Google Drive/Schule/NVS/exercise/domanek/01_processes/builddir/meson-private/tmpnqso63ux/testfile.cpp -o /mnt/c/Users/Michael/Google Drive/Schule/NVS/exercise/domanek/01_processes/builddir/meson-private/tmpnqso63ux/output.obj -pipe -c -D_FILE_OFFSET_BITS=64 -O0 -fpermissive --print-search-dirs 
+Working directory:  /tmp/tmpi_oyv9gv
+Command line:  c++ /tmp/tmpi_oyv9gv/testfile.cpp -o /tmp/tmpi_oyv9gv/output.obj -pipe -D_FILE_OFFSET_BITS=64 -c -std=c++17 
+
+Code:
+ int i = static_cast<int>(0);
+Compiler stdout:
+ 
+Compiler stderr:
+ 
+Compiler accepts -std=c++17: YES
+Running compile:
+Working directory:  /mnt/c/Users/Michael/Google Drive/Schule/NVS/exercise/domanek/01_processes/builddir/meson-private/tmp1mhqa7v4
+Command line:  c++ /mnt/c/Users/Michael/Google Drive/Schule/NVS/exercise/domanek/01_processes/builddir/meson-private/tmp1mhqa7v4/testfile.cpp -o /mnt/c/Users/Michael/Google Drive/Schule/NVS/exercise/domanek/01_processes/builddir/meson-private/tmp1mhqa7v4/output.obj -pipe -c -D_FILE_OFFSET_BITS=64 -O0 -fpermissive --print-search-dirs 
 
 Code:
  
