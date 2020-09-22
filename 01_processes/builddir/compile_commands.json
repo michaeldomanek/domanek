@@ -1,8 +1,0 @@
-[
-  {
-    "directory": "/mnt/c/Users/Michael/Google Drive/Schule/NVS/exercise/domanek/01_processes/builddir",
-    "command": "c++ -IXXX.p -I. -I.. -I../include -fdiagnostics-color=always -pipe -D_FILE_OFFSET_BITS=64 -Wall -Winvalid-pch -Wnon-virtual-dtor -Wextra -Wpedantic -Werror -std=c++17 -g -MD -MQ XXX.p/src_abc.cpp.o -MF XXX.p/src_abc.cpp.o.d -o XXX.p/src_abc.cpp.o -c ../src/abc.cpp",
-    "file": "../src/abc.cpp",
-    "output": "XXX.p/src_abc.cpp.o"
-  }
-]
