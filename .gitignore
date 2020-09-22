@@ -33,9 +33,5 @@
 
 #custom
 build/
-<<<<<<< HEAD
 builddir/
 .vscode/
-=======
-.vs/
->>>>>>> af9a0eb639c3dab06ccad8f6cf56ee88e4eb31e6
