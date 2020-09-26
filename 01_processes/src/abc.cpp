@@ -5,33 +5,37 @@
 #include <csignal>
 #include <cstdlib>
 #include <cerrno>
-#include <cstring>
+#include <string>
 
 using namespace std;
 
 int main() {
-    auto pid{fork()};
-    auto counter = 0;
-    
-    chrono::milliseconds sleeptime(500);
+    chrono::milliseconds sleeptime(3000);
 
-    if (pid == 0) {
+    auto pid{fork()};
+    auto pid2{fork()};
+
+    if (pid == 0 && pid2 > 0) {
         execl("./charout", "charout", "A", nullptr);
         if (errno){
             cout << endl;
             kill(pid, SIGKILL);
             exit(1);
         }
-    } else {
-        while (true){
-            cout << "B" << flush;
-            this_thread::sleep_for(sleeptime);
-            
-            if (++counter == 6){
-                cout << endl;
-                kill(pid, SIGKILL);
-                quick_exit(EXIT_SUCCESS);
-            }
+    } else if (pid > 0 && pid2 == 0) {
+        execl("./charout", "charout", "B", nullptr);
+        if (errno){
+            cout << endl;
+            kill(pid2, SIGKILL);
+            exit(1);
         }
+    } else if (pid > 0 && pid2 > 0) {
+        this_thread::sleep_for(sleeptime);
+
+        cout << endl;
+        kill(pid, SIGKILL);
+        kill(pid2, SIGKILL);
+        quick_exit(EXIT_SUCCESS);
     }
+    
 }
