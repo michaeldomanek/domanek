@@ -5,13 +5,15 @@ project('01_processes', 'cpp',
 
 thread_dep = dependency('threads')
 
-inc_dir = include_directories(['include'])
-
 src = ['src/abc.cpp']
 
 executable('XXX',
             sources : src,
-            include_directories : inc_dir,
+            dependencies : thread_dep
+           )
+
+executable('charout',
+            sources : ['src/charout.cpp'],
             dependencies : thread_dep
            )
 
