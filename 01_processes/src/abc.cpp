@@ -15,7 +15,7 @@ void outputEnvironmentVariable(auto environmentVariableName){
     if (environmentVariable){
         execl("./charout", "charout", environmentVariable, nullptr);
         if (errno){
-            cout << strerror(errno) << endl;
+            cout << "starting charout failed: " << strerror(errno) << endl;
             quick_exit(1);
         }
     } else {
