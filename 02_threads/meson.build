@@ -7,13 +7,10 @@ thread_dep = dependency('threads')
 
 inc_dir = include_directories(['include'])
 
-#subdir('XXX')
-
 src = ['src/main.cpp', 'src/car.cpp']
 
-executable('XXX',
+executable('contest',
             sources : src,
             include_directories : inc_dir,
             dependencies : thread_dep,
-            #link_with : XXX_lib
            )
