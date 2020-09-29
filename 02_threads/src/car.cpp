@@ -15,11 +15,11 @@ Car::Car(string carName){
     totalTime = 0;
 }
 
-void Car::operator()() {
+void Car::operator()(int value) {
     ostringstream buf;
     std::random_device rd;
 
-    for (int i=1; i <= 10; i++) {
+    for (int i=1; i <= value; i++) {
         std::mt19937 gen{rd()};
         std::uniform_real_distribution<> dis{1, 10};
         
@@ -31,7 +31,7 @@ void Car::operator()() {
 
         buf << i << " " << carName << " " << setprecision(3) << time << "s" << endl;
         cout << buf.str() << flush;
-        buf.str(""); 
+        buf.str("");
     }
 }
 

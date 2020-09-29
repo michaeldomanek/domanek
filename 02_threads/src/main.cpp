@@ -2,15 +2,66 @@
 
 #include <iostream>
 #include <thread>
+#include <string>
 
 using namespace std;
 
-int main() {
+
+void error(string msg=""){
+    if(msg == ""){
+        cout << "Usage: contest [-h | --help | LAPS]" << endl;
+    } else  {
+        cout << msg << endl;
+        cout << "Run with --help for more information." << endl;
+    }
+}
+
+void help(){
+    error();
+}
+
+
+int main(int argc, char* argv[]) {
+
+    int value;
+
+    if(argc == 1){
+        value = 10;
+    } else {
+        if(argc > 2){
+            error("too many arguments");
+            quick_exit(1);
+        }
+
+        string stringValue = argv[1];
+
+        if(stringValue == "-h" || stringValue == "--help"){
+            help();
+            quick_exit(EXIT_SUCCESS);
+        }
+
+        try {
+            size_t pos;
+            value = stoi(stringValue, &pos);
+            if (pos != stringValue.size()){
+                throw 1;
+            }
+        } catch (...) {
+            error("Could not convert: " + stringValue);
+            quick_exit(1);
+        }
+
+        if(value < 1 || value > 15){
+            error("Out of range (1 <= LAP'S < 16): 0");
+            quick_exit(EXIT_SUCCESS);
+        }
+    }
+
     Car car1("Opel Corsa");
     Car car2("Opel Manta");
 
-    thread t1{ref(car1)};
-    thread t2{ref(car2)};
+    thread t1{ref(car1), value};
+    thread t2{ref(car2), value};
 
     t1.join();
     t2.join();

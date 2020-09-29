@@ -10,7 +10,7 @@ class Car {
     public:
         Car(std::string carName);
 
-        void operator()();
+        void operator()(int value);
 
         double get_total_time();
 
