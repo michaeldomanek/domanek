@@ -8,16 +8,14 @@ using namespace std;
 
 
 void error(string msg=""){
-    if(msg == ""){
-        cout << "Usage: contest [-h | --help | LAPS]" << endl;
-    } else  {
+    if(msg != ""){
         cout << msg << endl;
-        cout << "Run with --help for more information." << endl;
-    }
+    }    
+    cout << "Run with --help for more information." << endl;
 }
 
 void help(){
-    error();
+    cout << "Usage: contest [-h | --help | LAPS]" << endl;
 }
 
 
