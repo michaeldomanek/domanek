@@ -6,11 +6,14 @@
 using namespace std;
 
 int main() {
+    auto deposit = [](Account& acc) {
+        string success = acc.withdraw(1) ? "true" : "false";
+        cout << "Withdraw erfolgreich: " + success + "\n";
+        cout << "Balance: " << acc.get_balance() << endl;
+    };
+
     Account acc = Account(1);
 
-    auto deposit = [](Account& acc) {
-        cout << "Withdraw erfolgreich: " << acc.withdraw(1) << endl;
-    };
     thread t1{deposit, ref(acc)};
     thread t2{deposit, ref(acc)};
     t1.join();    

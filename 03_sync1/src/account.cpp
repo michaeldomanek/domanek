@@ -2,6 +2,7 @@
 
 #include <iostream>
 #include <thread>
+#include <mutex>
 
 using namespace std;
 
@@ -18,13 +19,11 @@ void Account::deposit(int amount){
 }
 
 bool Account::withdraw(int amount){
-    int newBalance;
+    lock_guard<mutex> guard{m};
     if(balance >= amount){
-        newBalance = balance - amount;
+        balance -= amount;
         this_thread::yield();
-        balance = amount;
         return true;
     }
     return false;
-    
 }
