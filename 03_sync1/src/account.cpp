@@ -1,4 +1,4 @@
-#include "car.h"
+#include "account.h"
 
 #include <iostream>
 #include <thread>
@@ -18,8 +18,11 @@ void Account::deposit(int amount){
 }
 
 bool Account::withdraw(int amount){
+    int newBalance;
     if(balance >= amount){
-        balance -= amount;
+        newBalance = balance - amount;
+        this_thread::yield();
+        balance = amount;
         return true;
     }
     return false;
