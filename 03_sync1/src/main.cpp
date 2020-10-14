@@ -6,20 +6,11 @@
 using namespace std;
 
 int main() {
-    Account acc = Account(0);
+    Account acc{0};
 
-    thread t1{Depositer{ref(acc)}};
-    thread t2{Depositer{ref(acc)}};
+    thread t1{Depositer{ref(acc), 6}};
+    thread t2{Depositer{ref(acc), 3}};
 
     t1.join();
     t2.join();
-
-    // Punkt 1
-    cout << "Balance: " << acc.get_balance() << endl;
-    // acc.deposit(6);
-    // cout << "Balance: " << acc.get_balance() << endl;
-    // cout << "Withdraw erfolgreich: " << acc.withdraw(3) << endl;
-    // cout << "Balance: " << acc.get_balance() << endl;
-    // cout << "Withdraw erfolgreich: " << acc.withdraw(10) << endl;
-    // cout << "Balance: " << acc.get_balance() << endl;
 }

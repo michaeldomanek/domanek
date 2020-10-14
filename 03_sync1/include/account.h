@@ -18,11 +18,15 @@ class Account {
 class Depositer {
     private:
         Account& account;
+        int count;
     public:
-        Depositer(Account& acc): account(acc){};
+        Depositer(Account& acc, int depositCount):
+            account(acc), 
+            count(depositCount)
+            {};
         
         void operator()(){
-            for(int i = 0; i < 5; i++){
+            for(int i = 0; i < count; i++){
                 account.deposit(1);
             }
         }
