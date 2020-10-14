@@ -6,11 +6,12 @@
 using namespace std;
 
 int main() {
-    Account acc = Account(1);
+    Account acc = Account(0);
 
     thread t1{Depositer{ref(acc)}};
-    t1.join();
     thread t2{Depositer{ref(acc)}};
+
+    t1.join();
     t2.join();
 
     // Punkt 1

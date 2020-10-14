@@ -2,6 +2,7 @@
 #define ACCOUNT_H
 
 #include <mutex>
+#include <thread>
 
 class Account {
     private:
@@ -17,13 +18,10 @@ class Account {
 class Depositer {
     private:
         Account& account;
-        // std::mutex m;
     public:
         Depositer(Account& acc): account(acc){};
         
         void operator()(){
-            // std::unique_lock<std::mutex> ul{m};
-            std::lock_guard<std::mutex> ul{m};
             for(int i = 0; i < 5; i++){
                 account.deposit(1);
             }
