@@ -2,7 +2,6 @@
 #define ACCOUNT_H
 
 #include <mutex>
-#include <thread>
 
 class Account {
     private:

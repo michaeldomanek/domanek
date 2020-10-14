@@ -2,7 +2,6 @@
 
 #include <iostream>
 #include <thread>
-// #include <mutex>
 
 using namespace std;
 
@@ -16,16 +15,13 @@ int Account::get_balance(){
 
 void Account::deposit(int amount){
     unique_lock<mutex> ul{m};
-    int tmp{balance};
-    this_thread::sleep_for(10ms);
-    balance = tmp + amount;
+    balance += amount;
 }
 
 bool Account::withdraw(int amount){
     lock_guard<mutex> guard{m};
     if(balance >= amount){
         balance -= amount;
-        this_thread::yield();
         return true;
     }
     return false;
