@@ -7,5 +7,5 @@ class WorkPacket {
         WorkPacket(int id): id(id){};
         int get_id() const {
             return id;
-        }
+        };
 };
