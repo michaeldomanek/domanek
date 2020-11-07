@@ -6,13 +6,13 @@
 
 using namespace std;
 
-void WorkQueue::push(WorkPacket wp){
-    lock_guard<mutex> lck{m};
+void WorkQueue::push(WorkPacket wp) {
+    lock_guard<mutex> lock{m};
     queue.push(wp);
 }
 
-WorkPacket WorkQueue::pop(){
-    unique_lock<mutex> lck{m};
+WorkPacket WorkQueue::pop() {
+    unique_lock<mutex> lock{m};
     WorkPacket wp = queue.front();
     queue.pop();
     return wp;

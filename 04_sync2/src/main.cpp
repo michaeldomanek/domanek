@@ -2,15 +2,19 @@
 #include "work_queue.h"
 
 #include <iostream>
+#include <thread>
+#include <chrono>
 
 using namespace std;
 
 int main() {
-    WorkPacket wp1{3};
-    WorkPacket wp2{2};
     WorkQueue wq{};
-    wq.push(wp1);
-    wq.push(wp2);
-    cout << wq.pop().get_id() << endl;
-    cout << wq.pop().get_id() << endl;
+    chrono::milliseconds sleeptime(500);
+
+    for(int i{0};; i++){
+        WorkPacket wp{i};    
+        wq.push(wp);
+        cout << "B: Submitted work packet " << i << endl;
+        this_thread::sleep_for(sleeptime);
+    }
 }
