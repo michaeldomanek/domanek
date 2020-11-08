@@ -9,7 +9,6 @@
 #include <string>
 #include <iomanip>
 #include <sstream>
-#include <cstddef>
 
 using namespace std;
 
@@ -76,7 +75,7 @@ int main(int argc, char* argv[]) {
         buf.str("");
 
         wq.push(wp);
-        buf << "B:  Submitted work packet" << i 
+        buf << "B:  Submitted work packet " << i 
             << " (" << setprecision(2) << time << "s)" << endl;
         cout << buf.str() << flush;
         buf.str("");
