@@ -1,5 +1,6 @@
 #include "work_packet.h"
 #include "work_queue.h"
+#include "CLI11.hpp"
 
 #include <iostream>
 #include <thread>
@@ -8,6 +9,7 @@
 #include <string>
 #include <iomanip>
 #include <sstream>
+#include <cstddef>
 
 using namespace std;
 
@@ -40,12 +42,20 @@ void worker(int id, WorkQueue& wq){
     }
 }
 
-int main() {
-    WorkQueue wq{};
+int main(int argc, char* argv[]) {
+    CLI::App app("Boss and worker simulation");
+
     ostringstream buf;
     std::random_device rd;
     std::mt19937 gen{rd()};
     std::uniform_real_distribution<> dis{0, 1};
+
+    unsigned int size{0};
+    app.add_option("size", size, "Size of the queue")->required();
+
+    CLI11_PARSE(app, argc, argv);
+
+    WorkQueue wq{size};
 
     thread w1{worker, 1, ref(wq)};
     thread w2{worker, 2, ref(wq)};
