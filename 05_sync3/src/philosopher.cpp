@@ -12,40 +12,45 @@
 
 using namespace std;
 
-void println(const initializer_list<string>& messages){
-    string output = "";
-    for (auto message: messages){
-        output += message;
-    }
-    output += '\n';
-    cout << output << flush;
+recursive_mutex out_mtx;
+
+void println() {
+    lock_guard<recursive_mutex> lg{out_mtx};
+    cout << endl;
 }
 
-void Philosopher::operator()(){
+template<typename T, typename... Rest>
+void println(const T& word, const Rest&... rest) {
+    lock_guard<recursive_mutex> lg{out_mtx};
+    cout << word;
+    println(rest...);
+}
+
+void Philosopher::operator()() {
     while(true){
-        println({"Philosopher ", to_string(id), " is thinking..."});
+        println("Philosopher ", to_string(id), " is thinking...");
 
         this_thread::sleep_for(chrono::milliseconds(1000));
 
-        println({"Philosopher ", to_string(id), " attempts to get left fork"});
+        println("Philosopher ", to_string(id), " attempts to get left fork");
 
         fork1.lock();
 
-        println({"Philosopher ", to_string(id), " got left fork. Now he wants the right one..."});
+        println("Philosopher ", to_string(id), " got left fork. Now he wants the right one...");
 
         fork2.lock();
 
-        println({"Philosopher ", to_string(id), " got right fork. Now he is eating..."});
+        println("Philosopher ", to_string(id), " got right fork. Now he is eating...");
 
         this_thread::sleep_for(chrono::milliseconds(2000));
 
-        println({"Philosopher ", to_string(id), " finished eating"});
+        println("Philosopher ", to_string(id), " finished eating");
 
         fork1.unlock();
         fork2.unlock();
 
-        println({"Philosopher ", to_string(id), " released left fork"});
-        println({"Philosopher ", to_string(id), " released right fork"});
+        println("Philosopher ", to_string(id), " released left fork");
+        println("Philosopher ", to_string(id), " released right fork");
 
     }
 }
