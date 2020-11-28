@@ -12,7 +12,7 @@
 
 using namespace std;
 
-void println(const vector<string>& messages){
+void println(const initializer_list<string>& messages){
     string output = "";
     for (auto message: messages){
         output += message;
