@@ -1,4 +1,5 @@
 #include "philosopher.h"
+#include "semaphore.h"
 
 #include <mutex>
 #include <thread>
@@ -13,11 +14,13 @@ int main() {
     mutex f4;
     mutex f5;
 
-    Philosopher p1{1, f1, f2};
-    Philosopher p2{2, f2, f3};
-    Philosopher p3{3, f3, f4};
-    Philosopher p4{4, f4, f5};
-    Philosopher p5{5, f5, f1};
+    Semaphore *semaphore = new Semaphore(4);
+
+    Philosopher p1{1, f1, f2, semaphore};
+    Philosopher p2{2, f2, f3, semaphore};
+    Philosopher p3{3, f3, f4, semaphore};
+    Philosopher p4{4, f4, f5, semaphore};
+    Philosopher p5{5, f5, f1, semaphore};
 
     thread t1{p1};
     thread t2{p2};

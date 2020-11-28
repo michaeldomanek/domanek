@@ -1,4 +1,5 @@
 #include "philosopher.h"
+#include "semaphore.h"
 
 #include <mutex>
 #include <thread>
@@ -32,11 +33,17 @@ void Philosopher::operator()() {
 
         this_thread::sleep_for(chrono::milliseconds(1000));
 
+        if (seamphore != nullptr) {
+            seamphore->acquire();
+        }
+
         println("Philosopher ", to_string(id), " attempts to get left fork");
 
         fork1.lock();
 
         println("Philosopher ", to_string(id), " got left fork. Now he wants the right one...");
+
+        this_thread::sleep_for(chrono::milliseconds(5000));
 
         fork2.lock();
 
@@ -50,6 +57,12 @@ void Philosopher::operator()() {
         fork2.unlock();
 
         println("Philosopher ", to_string(id), " released left fork");
+
+        if (seamphore != nullptr) {
+            seamphore->release();
+        }
+
+
         println("Philosopher ", to_string(id), " released right fork");
 
     }
