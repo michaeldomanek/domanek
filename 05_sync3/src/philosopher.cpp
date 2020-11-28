@@ -12,31 +12,40 @@
 
 using namespace std;
 
+void println(const vector<string>& messages){
+    string output = "";
+    for (auto message: messages){
+        output += message;
+    }
+    output += '\n';
+    cout << output << flush;
+}
+
 void Philosopher::operator()(){
     while(true){
-        cout << "Philosopher " + to_string(id) + " is thinking...\n" << flush;
+        println({"Philosopher ", to_string(id), " is thinking..."});
 
         this_thread::sleep_for(chrono::milliseconds(1000));
 
-        cout << "Philosopher " + to_string(id) + " attempts to get left fork\n" << flush;
+        println({"Philosopher ", to_string(id), " attempts to get left fork"});
 
         fork1.lock();
 
-        cout << "Philosopher " + to_string(id) + " got left fork. Now he wants the right one...\n" << flush;
+        println({"Philosopher ", to_string(id), " got left fork. Now he wants the right one..."});
 
         fork2.lock();
 
-        cout << "Philosopher " + to_string(id) + " got right fork. Now he is eating...\n" << flush;
+        println({"Philosopher ", to_string(id), " got right fork. Now he is eating..."});
 
         this_thread::sleep_for(chrono::milliseconds(2000));
 
-        cout << "Philosopher " + to_string(id) + " finished eating\n" << flush;
+        println({"Philosopher ", to_string(id), " finished eating"});
 
         fork1.unlock();
         fork2.unlock();
 
-        cout << "Philosopher " + to_string(id) + " released left fork\n" << flush;
-        cout << "Philosopher " + to_string(id) + " released right fork\n" << flush;
+        println({"Philosopher ", to_string(id), " released left fork"});
+        println({"Philosopher ", to_string(id), " released right fork"});
 
     }
 }
