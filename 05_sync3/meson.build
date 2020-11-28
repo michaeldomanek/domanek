@@ -5,7 +5,9 @@ project('05_sync3', 'cpp',
 
 thread_dep = dependency('threads')
 
-inc_dir = include_directories(['include'])
+inc_dir = include_directories(['include'],
+                              get_option('cli11_include_dir')
+                             )
 
 src = ['src/main.cpp', 'src/philosopher.cpp', 'src/semaphore.cpp']
 

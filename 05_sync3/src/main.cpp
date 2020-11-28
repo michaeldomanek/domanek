@@ -1,5 +1,6 @@
 #include "philosopher.h"
 #include "semaphore.h"
+#include "CLI11.hpp"
 
 #include <mutex>
 #include <thread>
@@ -7,14 +8,28 @@
 using namespace std;
 
 
-int main() {
+int main(int argc, char* argv[]) {
+    CLI::App app("Dining philosophers simulation");
+
     mutex f1;
     mutex f2;
     mutex f3;
     mutex f4;
     mutex f5;
 
-    Semaphore *semaphore = new Semaphore(4);
+    bool nodeadlock{false};
+    app.add_flag("-n,--nodeadlock", nodeadlock, "Prevent a deadlock at all");
+
+    bool livelock{false};
+    app.add_flag("-l,--livelock", livelock, "Simulate a livelock");
+
+    CLI11_PARSE(app, argc, argv);
+
+    Semaphore *semaphore = nullptr;
+
+    if(nodeadlock){
+        semaphore = new Semaphore(4);
+    }
 
     Philosopher p1{1, f1, f2, semaphore};
     Philosopher p2{2, f2, f3, semaphore};
