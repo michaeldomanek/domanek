@@ -27,43 +27,56 @@ void println(const T& word, const Rest&... rest) {
     println(rest...);
 }
 
+
 void Philosopher::operator()() {
     while(true){
-        println("Philosopher ", to_string(id), " is thinking...");
+        println("Philosopher ", id, " is thinking...");
 
-        this_thread::sleep_for(chrono::milliseconds(1000));
+        this_thread::sleep_for(chrono::seconds(1));
 
-        if (seamphore != nullptr) {
-            seamphore->acquire();
-        }
+        bool got_fork2{false};
 
-        println("Philosopher ", to_string(id), " attempts to get left fork");
+        do {
+            if (seamphore) {
+                seamphore->acquire();
+            }
 
-        fork1.lock();
+            println("Philosopher ", id, " attempts to get left fork");
 
-        println("Philosopher ", to_string(id), " got left fork. Now he wants the right one...");
+            fork1.lock();
 
-        this_thread::sleep_for(chrono::milliseconds(5000));
+            println("Philosopher ", id, " got left fork. Now he wants the right one...");
 
-        fork2.lock();
+            this_thread::sleep_for(chrono::seconds(5));
 
-        println("Philosopher ", to_string(id), " got right fork. Now he is eating...");
+            if (livelock) {
+                fork2.try_lock_for(chrono::seconds(3));
+                if (!got_fork2) {
+                    this_thread::sleep_for(chrono::milliseconds(100));
+                    fork1.unlock();
+                    println("Philosopher ", id, " released left fork due to timeout getting the right one!");
+                    this_thread::sleep_for(chrono::seconds(3));
+                }
+            } else {
+                fork2.lock();
+                println("Philosopher ", id, " got right fork. Now he is eating...");
+            }
+        } while (livelock && !got_fork2);
 
-        this_thread::sleep_for(chrono::milliseconds(2000));
+        this_thread::sleep_for(chrono::seconds(2));
 
-        println("Philosopher ", to_string(id), " finished eating");
+        println("Philosopher ", id, " finished eating");
 
         fork1.unlock();
+
+        println("Philosopher ", id, " released left fork");
+
         fork2.unlock();
 
-        println("Philosopher ", to_string(id), " released left fork");
+        println("Philosopher ", id, " released right fork");
 
-        if (seamphore != nullptr) {
+        if (seamphore) {
             seamphore->release();
         }
-
-
-        println("Philosopher ", to_string(id), " released right fork");
-
     }
 }

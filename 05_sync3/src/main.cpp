@@ -11,11 +11,13 @@ using namespace std;
 int main(int argc, char* argv[]) {
     CLI::App app("Dining philosophers simulation");
 
-    mutex f1;
-    mutex f2;
-    mutex f3;
-    mutex f4;
-    mutex f5;
+    timed_mutex f1;
+    timed_mutex f2;
+    timed_mutex f3;
+    timed_mutex f4;
+    timed_mutex f5;
+
+    Semaphore *semaphore = nullptr;
 
     bool nodeadlock{false};
     app.add_flag("-n,--nodeadlock", nodeadlock, "Prevent a deadlock at all");
@@ -25,17 +27,15 @@ int main(int argc, char* argv[]) {
 
     CLI11_PARSE(app, argc, argv);
 
-    Semaphore *semaphore = nullptr;
-
     if(nodeadlock){
         semaphore = new Semaphore(4);
     }
 
-    Philosopher p1{1, f1, f2, semaphore};
-    Philosopher p2{2, f2, f3, semaphore};
-    Philosopher p3{3, f3, f4, semaphore};
-    Philosopher p4{4, f4, f5, semaphore};
-    Philosopher p5{5, f5, f1, semaphore};
+    Philosopher p1{1, f1, f2, semaphore, livelock};
+    Philosopher p2{2, f2, f3, semaphore, livelock};
+    Philosopher p3{3, f3, f4, semaphore, livelock};
+    Philosopher p4{4, f4, f5, semaphore, livelock};
+    Philosopher p5{5, f5, f1, semaphore, livelock};
 
     thread t1{p1};
     thread t2{p2};
