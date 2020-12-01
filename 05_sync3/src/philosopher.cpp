@@ -29,7 +29,7 @@ void println(const T& word, const Rest&... rest) {
 
 
 void Philosopher::operator()() {
-    while(true){
+    while (true) {
         println("Philosopher ", id, " is thinking...");
 
         this_thread::sleep_for(chrono::seconds(1));
