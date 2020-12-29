@@ -6,7 +6,11 @@
 
 #include <vector>
 
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wmisleading-indentation"
+#pragma GCC diagnostic ignored "-Wsign-compare"
 #include "InfInt.h"
+#pragma GCC diagnostic pop
 
 inline std::vector<InfInt> get_factors(InfInt number) { // number should be positive
     std::vector<InfInt> factors;

@@ -1,14 +1,13 @@
-// #pragma GCC diagnostic push
-// #pragma GCC diagnostic ignored "-Wmisleading-indentation"
-// #pragma GCC diagnostic ignored "-Wsign-compare"
-// #include "InfInt.h"
-// #pragma GCC diagnostic pop
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wmisleading-indentation"
+#pragma GCC diagnostic ignored "-Wsign-compare"
+#include "InfInt.h"
+#pragma GCC diagnostic pop
 
 #include "CLI11.hpp"
 
 #include <vector>
 #include <string>
-#include <cstddef>
 
 using namespace std;
 
@@ -21,6 +20,8 @@ string callable(const std::string &str){
 int main(int argc, char* argv[]) {
     CLI::App app("Factor numbers");
 
+    vector<InfInt> numbers;
+
     vector<string> stringNumbers;
     app.add_option("number", stringNumbers, "numbers to factor")->required()->check(callable);
 
@@ -29,6 +30,12 @@ int main(int argc, char* argv[]) {
 
     CLI11_PARSE(app, argc, argv);
 
-    for (const auto& stringNumber: stringNumbers)
-        cout << stringNumber << endl;
+    for (const auto& stringNumber: stringNumbers){
+        numbers.push_back(stringNumber);
+    }
+
+    for (const auto& number: numbers){
+        cout << number << endl;
+    }
+        
 }
