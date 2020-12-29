@@ -4,6 +4,8 @@
 #include "InfInt.h"
 #pragma GCC diagnostic pop
 
+#include "calc_factors.h"
+
 #include "CLI11.hpp"
 
 #include <vector>
@@ -34,8 +36,15 @@ int main(int argc, char* argv[]) {
         numbers.push_back(stringNumber);
     }
 
-    for (const auto& number: numbers){
-        cout << number << endl;
-    }
+    for (const auto& number: numbers) {
+        vector<InfInt> primeFactors = get_factors(number);
+
+        cout << number << ": ";
         
+        for (const auto& primeNumber: primeFactors) {
+            cout << primeNumber << ' ';
+        }
+
+        cout << endl;
+    }
 }
