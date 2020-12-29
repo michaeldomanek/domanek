@@ -10,10 +10,12 @@
 
 #include <vector>
 #include <string>
+#include <future>
+#include <thread>
 
 using namespace std;
 
-string callable(const std::string &str){
+string checkString(const std::string &str){
     if (str.find_first_not_of("0123456789") != string::npos)
         return "number: " + str + " contains not numeric character";
     return string();
@@ -25,10 +27,10 @@ int main(int argc, char* argv[]) {
     vector<InfInt> numbers;
 
     vector<string> stringNumbers;
-    app.add_option("number", stringNumbers, "numbers to factor")->required()->check(callable);
+    app.add_option("number", stringNumbers, "numbers to factor")->required()->check(checkString);
 
-    bool async{false};
-    app.add_flag("-a,--async", async, "async");
+    bool isAsync{false};
+    app.add_flag("-a,--async", isAsync, "async");
 
     CLI11_PARSE(app, argc, argv);
 
@@ -36,12 +38,16 @@ int main(int argc, char* argv[]) {
         numbers.push_back(stringNumber);
     }
 
+    vector<shared_future<vector<InfInt>>> futures;
     for (const auto& number: numbers) {
-        vector<InfInt> primeFactors = get_factors(number);
+        shared_future<vector<InfInt>> primeFactors{async(get_factors, number)};
+        futures.push_back(primeFactors);
+    }
 
-        cout << number << ": ";
+    for(vector<InfInt>::size_type i = 0; i != numbers.size(); i++) {
+        cout << numbers[i] << ": ";
         
-        for (const auto& primeNumber: primeFactors) {
+        for (const auto& primeNumber: futures[i].get()) {
             cout << primeNumber << ' ';
         }
 
