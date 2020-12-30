@@ -12,6 +12,7 @@
 #include <string>
 #include <future>
 #include <thread>
+#include <chrono>
 
 using namespace std;
 
@@ -67,15 +68,26 @@ int main(int argc, char* argv[]) {
         numbers.push_back(stringNumber);
     }
 
+    auto start = chrono::system_clock::now();
+
     vector<shared_future<vector<InfInt>>> futures;
     for (const auto& number: numbers) {
-        shared_future<vector<InfInt>> primeFactors{async(launch::async, get_factors, number)};
-        futures.push_back(primeFactors);
+        if(isAsync){
+            shared_future<vector<InfInt>> primeFactors{async(launch::async, get_factors, number)};
+            futures.push_back(primeFactors);
+        } else {
+            shared_future<vector<InfInt>> primeFactors{async(launch::deferred, get_factors, number)};
+            futures.push_back(primeFactors);
+        }
     }
 
     thread t{checkFactors, numbers, futures};
 
     printPrimes(numbers, futures);
+
+    auto duration = chrono::duration_cast<chrono::milliseconds>
+        (std::chrono::system_clock::now() - start);
+    cout << "Time elapsed used for factoring: " << duration.count() << "ms" << endl;
 
     t.join();
 }
