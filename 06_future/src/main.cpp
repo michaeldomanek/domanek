@@ -15,11 +15,40 @@
 
 using namespace std;
 
-string checkString(const std::string &str){
+string checkString(const string &str){
     if (str.find_first_not_of("0123456789") != string::npos)
         return "number: " + str + " contains not numeric character";
     return string();
 }
+
+
+void printPrimes(vector<InfInt> numbers, vector<shared_future<vector<InfInt>>> futures) {
+    for(vector<InfInt>::size_type i = 0; i != numbers.size(); i++) {
+        cout << numbers[i] << ": ";
+        
+        for (const auto& primeNumber: futures[i].get()) {
+            cout << primeNumber << ' ';
+        }
+
+        cout << endl;
+    }
+}
+
+
+void checkFactors(vector<InfInt> numbers, vector<shared_future<vector<InfInt>>> futures) {
+    for(vector<InfInt>::size_type i = 0; i != numbers.size(); i++) {
+        InfInt sum = 1;
+        for (const auto& primeNumber: futures[i].get()) {
+            sum *= primeNumber;
+        }
+
+        if(sum != numbers[i]){
+            cerr << "\nerror with number: " + numbers[i].toString() + "\n" << flush;
+        }
+        
+    }
+}
+
 
 int main(int argc, char* argv[]) {
     CLI::App app("Factor numbers");
@@ -40,17 +69,13 @@ int main(int argc, char* argv[]) {
 
     vector<shared_future<vector<InfInt>>> futures;
     for (const auto& number: numbers) {
-        shared_future<vector<InfInt>> primeFactors{async(get_factors, number)};
+        shared_future<vector<InfInt>> primeFactors{async(launch::async, get_factors, number)};
         futures.push_back(primeFactors);
     }
 
-    for(vector<InfInt>::size_type i = 0; i != numbers.size(); i++) {
-        cout << numbers[i] << ": ";
-        
-        for (const auto& primeNumber: futures[i].get()) {
-            cout << primeNumber << ' ';
-        }
+    thread t{checkFactors, numbers, futures};
 
-        cout << endl;
-    }
+    printPrimes(numbers, futures);
+
+    t.join();
 }
