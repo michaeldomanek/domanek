@@ -1,6 +1,8 @@
 #include "clock.h"
 #include "pipe.h"
 
+#include "CLI11.hpp"
+
 #include <iostream>
 #include <thread>
 #include <string>
@@ -114,21 +116,32 @@ class TimeMaster {
         }
 };
 
-int main() { //int argc, char* argv[]
-    bool monoton = false;
+int main(int argc, char* argv[]) {
+    CLI::App app("Simulate the berkeley algorithm");
+
+    bool monotone = false;
     int delay1{};
     int delay2{};
     int rateM{1000};
     int rate1{1000};
     int rate2{1000};
 
+    app.add_flag("--monotone", monotone, "set monotone mode");
+    app.add_option("--latency1", delay1, "latency to channel 1 (both directions)");
+    app.add_option("--latency2", delay2, "latency to channel 2 (both directions)");
+    app.add_option("--deviation1", rateM, "deviation of clock of slave 1");
+    app.add_option("--deviation2", rate1, "deviation of clock of slave 2");
+    app.add_option("--deviationm", rate2, "deviation of clock of master");
+
+    CLI11_PARSE(app, argc, argv);
+
     TimeSlave slave1{"slave1", 0, 0, 12};
     TimeSlave slave2{"slave2", 0, 0, 22};
     TimeMaster master{"master", 0, 0, 42};
 
-    slave1.set_time_monoton(monoton);
-    slave2.set_time_monoton(monoton);
-    master.set_time_monoton(monoton);
+    slave1.set_time_monoton(monotone);
+    slave2.set_time_monoton(monotone);
+    master.set_time_monoton(monotone);
     
     slave1.get_channel()->set_latency(delay1);
     slave2.get_channel()->set_latency(delay2);

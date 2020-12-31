@@ -39,7 +39,7 @@ void Clock::operator()(){
     while (true) {
         {
             scoped_lock lock(mtx);
-            cout << curr_time << endl;     
+            cout << name << ": " << curr_time << endl;     
         }
         this_thread::sleep_for(chrono::milliseconds(clock_speed + clock_slowdown));
         curr_time += 1s;
