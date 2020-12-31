@@ -9,7 +9,7 @@ inc_dir = include_directories(['include'],
                               get_option('cli11_include_dir')
                              )
 
-src = ['src/main.cpp']
+src = ['src/main.cpp', 'src/clock.cpp']
 
 executable('berkeley',
             sources : src,
