@@ -9,26 +9,23 @@ using namespace asio;
 using namespace asio::ip;
 
 int main() {
-    // auto console = spdlog::stderr_color_mt("console");
-    // console->set_level(spdlog::level::trace);
-    // console->info("Hello World!");
+    auto console = spdlog::stderr_color_mt("console");
+    console->set_level(spdlog::level::err);
 
     asio::io_context ctx;
     tcp::resolver resolver{ctx};
     
-    // try {
-        
-    auto results = resolver.resolve("localhost", "1113");
-    tcp::socket sock{ctx};
-    connect(sock, results);
+    try {
+        auto results = resolver.resolve("localhost", "1113");
+        tcp::socket sock{ctx};
+        connect(sock, results);
 
-    char reply[28];
-    read(sock, buffer(reply, 28));
-    cout.write(reply, 28);
-    cout << "\n";
+        char reply[28];
+        read(sock, buffer(reply, 28));
+        cout.write(reply, 28);
+        cout << "\n";
 
-
-    // } catch (system_error& e) {
-    //     cerr << e.what() << endl;
-    // }   
+    } catch (system_error& e) {
+        console->error("Could not connect to server!");
+    }
 }
