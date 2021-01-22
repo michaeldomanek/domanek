@@ -3,6 +3,8 @@
 
 #include "asio.hpp"
 
+#include "CLI11.hpp"
+
 #include <iostream>
 #include <chrono>
 #include <ctime>
@@ -19,21 +21,32 @@ inline tcp::iostream& operator<<(tcp::iostream& out, decltype(std::chrono::syste
     return out;
 }
 
-int main() {
+int main(int argc, char* argv[]) {
+    CLI::App app("Daytime Server");
+
+    unsigned short port{1113};
+    app.add_option("-p,--port", port, "port to connect to");
+
+    CLI11_PARSE(app, argc, argv);
+
     auto console = spdlog::stderr_color_mt("console");
     console->set_level(spdlog::level::err);
 
-    io_context ctx;
-    tcp::endpoint ep{tcp::v4(), 1113};
-    tcp::acceptor acceptor{ctx, ep};
-    acceptor.listen();
+    try {
+        io_context ctx;
+        tcp::endpoint ep{tcp::v4(), port};
+        tcp::acceptor acceptor{ctx, ep};
+        acceptor.listen();
+    
+        while (true) {
+            tcp::iostream strm{acceptor.accept()};
 
-    while (true) {
-        tcp::iostream strm{acceptor.accept()};
-
-        string data;
-        strm >> data;
-        strm << std::chrono::system_clock::now();
-        strm.close(); 
+            string data;
+            strm >> data;
+            strm << std::chrono::system_clock::now();
+            strm.close(); 
+        }
+    } catch (asio::system_error& e) {
+        console->error(e.what());
     }
 }
