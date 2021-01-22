@@ -1,9 +1,5 @@
 
-option('asio_include_dir', type : 'string', value : '', description : 'the include dir of asio')
-option('cli11_include_dir', type : 'string', value : '', description : 'the dir containing CLI11.hpp')
-option('doctest_include_dir', type : 'string', value : '', description : 'the dir containing doctest.h')
-option('json_include_dir', type : 'string', value : '', description : 'the dir containing json.hpp')
+option('asio_include_dir', type : 'string', value : '/home/michael/asio/asio/include/', description : 'the include dir of asio')
+option('cli11_include_dir', type : 'string', value : '/home/michael/', description : 'the dir containing CLI11.hpp')
 option('spdlog_include_dir', type : 'string', value : '/home/michael/spdlog/include/', description : 'the include dir of spdlog')
-option('fmt_include_dir', type : 'string', value : '', description : 'the include dir of fmt')
-option('toml_include_dir', type : 'string', value : '', description : 'the include dir of toml++')
 
