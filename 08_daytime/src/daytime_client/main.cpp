@@ -1,7 +1,8 @@
 #include "spdlog/spdlog.h"
 #include "spdlog/sinks/stdout_color_sinks.h"
 
-#include <asio.hpp>
+#include "asio.hpp"
+
 #include <iostream>
 
 using namespace std;
@@ -11,21 +12,16 @@ using namespace asio::ip;
 int main() {
     auto console = spdlog::stderr_color_mt("console");
     console->set_level(spdlog::level::err);
+   
+    tcp::iostream strm{"localhost", "1113"};
 
-    asio::io_context ctx;
-    tcp::resolver resolver{ctx};
-    
-    try {
-        auto results = resolver.resolve("localhost", "1113");
-        tcp::socket sock{ctx};
-        connect(sock, results);
-
-        char reply[28];
-        read(sock, buffer(reply, 28));
-        cout.write(reply, 28);
-        cout << "\n";
-
-    } catch (system_error& e) {
+    if (strm) {
+        strm << "get-time" << endl;
+        string data;
+        getline(strm, data);
+        cout << data << endl;
+        strm.close();
+    } else {
         console->error("Could not connect to server!");
     }
 }

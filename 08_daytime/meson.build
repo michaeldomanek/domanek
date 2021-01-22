@@ -26,8 +26,8 @@ executable('client',
             dependencies : thread_dep,
            )
 
-# executable('server',
-#             sources : ['src/daytime_server'],
-#             include_directories : inc_dir,
-#             #dependencies : XXX_dep,
-#            )
+executable('server',
+            sources : ['src/daytime_server/main.cpp'],
+            include_directories : inc_dir,
+            dependencies : thread_dep,
+           )
